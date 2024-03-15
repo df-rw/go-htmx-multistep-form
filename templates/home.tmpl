@@ -1,0 +1,26 @@
+{{block "top" .}}
+    <!doctype html>
+    <html>
+        <head>
+            <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+        </head>
+
+        <body>
+            <ul>
+                <li><a href="/">home</a></li>
+                <li><a href="/form/one">form</a></li>
+            </ul>
+{{end}}
+
+{{block "bottom" .}}
+        </body>
+    </html>
+{{end}}
+
+{{block "home" .}}
+    {{template "top" .}}
+
+    <p>this is the home page</p>
+
+    {{template "bottom" .}}
+{{end}}
