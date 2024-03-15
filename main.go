@@ -32,6 +32,7 @@ func (app *Application) formSection(w http.ResponseWriter, r *http.Request) {
 	_ = r.ParseForm()
 
 	hxRequest := r.Header.Get("Hx-Request") == "true"
+	hxBoosted := r.Header.Get("Hx-Boosted") == "true"
 
 	switch section {
 	case "one":
@@ -40,14 +41,14 @@ func (app *Application) formSection(w http.ResponseWriter, r *http.Request) {
 
 		switch {
 		case next:
-			if hxRequest {
+			if hxRequest && hxBoosted {
 				app.render(w, "form-two", nil, http.StatusOK)
 			} else {
 				http.Redirect(w, r, "/form/two", http.StatusSeeOther)
 			}
 
 		case cancel:
-			if hxRequest {
+			if hxRequest && hxBoosted {
 				w.Header().Set("Hx-Redirect", "/")
 			} else {
 				http.Redirect(w, r, "/", http.StatusSeeOther)
@@ -63,14 +64,14 @@ func (app *Application) formSection(w http.ResponseWriter, r *http.Request) {
 
 		switch {
 		case next:
-			if hxRequest {
+			if hxRequest && hxBoosted {
 				app.render(w, "form-three", nil, http.StatusOK)
 			} else {
 				http.Redirect(w, r, "/form/three", http.StatusSeeOther)
 			}
 
 		case prev:
-			if hxRequest {
+			if hxRequest && hxBoosted {
 				app.render(w, "form-one", nil, http.StatusOK)
 			} else {
 				http.Redirect(w, r, "/form/one", http.StatusSeeOther)
@@ -87,14 +88,14 @@ func (app *Application) formSection(w http.ResponseWriter, r *http.Request) {
 
 		switch {
 		case submit:
-			if hxRequest {
+			if hxRequest && hxBoosted {
 				w.Header().Set("Hx-Redirect", "/form/submitted")
 			} else {
 				http.Redirect(w, r, "/form/submitted", http.StatusSeeOther)
 			}
 
 		case prev:
-			if hxRequest {
+			if hxRequest && hxBoosted {
 				app.render(w, "form-two", nil, http.StatusOK)
 			} else {
 				http.Redirect(w, r, "/form/two", http.StatusSeeOther)
