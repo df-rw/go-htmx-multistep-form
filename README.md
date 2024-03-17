@@ -367,7 +367,7 @@ AJAX request and swap in the response.
 
 The [`hx-boost` attribute](https://htmx.org/attributes/hx-boost/)  tells htmx
 to issue this request as an AJAX request. The [`hx-target`
-attribute](https://htmx.org/attributes/hx-target/) tells htmx how to swap the
+attribute](https://htmx.org/attributes/hx-target/) tells htmx where to swap the
 returned HTML into the current page. The [`hx-swap`
 attribute](https://htmx.org/attributes/hx-swap/) tells htmx how to swap the new
 element in:
@@ -378,7 +378,7 @@ element in:
 ```
 
 Here, we are turning on AJAX reqeusts for this form, and telling htmx to replace
-this entire form, with the HTML that is returned (ie. the next form).
+this entire form, with the HTML that is returned from `/form/one`.
 
 ### Update server to check for htmx requests
 
@@ -389,6 +389,7 @@ request first:
     _ = r.ParseForm()
 
 +   hxRequest := r.Header.Get("Hx-Request") == "true"
++   hxBoosted := r.Header.Get("Hx-Boosted") == "true"
 ```
 
 And based on it's value, respond appropriately:
@@ -397,7 +398,7 @@ And based on it's value, respond appropriately:
     switch {
         case next:
 -           http.Redirect(w, r, "/form/two", http.StatusSeeOther)
-+           if hxRequest {
++           if hxRequest && hxBoosted {
 +               app.render(w, "form-two", nil, http.StatusOK)
 +           } else {
 +               http.Redirect(w, r, "/form/two", http.StatusSeeOther)
