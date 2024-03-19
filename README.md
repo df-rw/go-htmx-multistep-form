@@ -392,13 +392,16 @@ request first:
 +   hxBoosted := r.Header.Get("Hx-Boosted") == "true"
 ```
 
-And based on it's value, respond appropriately:
+And based on it's value, respond appropriately. Note the use of `HX-Push-URL`
+to make sure the URL in the browser location bar is updated to match the
+corresponding page for the partial that we return:
 
 ```diff
     switch {
         case next:
 -           http.Redirect(w, r, "/form/two", http.StatusSeeOther)
 +           if hxRequest && hxBoosted {
++               w.Header().Set("HX-Push-Url", "/form/two")
 +               app.render(w, "form-two", nil, http.StatusOK)
 +           } else {
 +               http.Redirect(w, r, "/form/two", http.StatusSeeOther)
@@ -424,3 +427,6 @@ Our GET handler needs to return pages, not partials:
 - Depending on the logic in the POST handler, you could end up with cyclees in
   your multi-step form.
 - No validation in this demo, but you get the idea.
+- Sending a partial response after a `POST` won't update the URL in the
+  location bar of a browser. We use the response header `HX-Push-Url` to
+  update this.
