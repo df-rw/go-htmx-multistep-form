@@ -1,24 +1,33 @@
 {{block "form-one" .}}
     <form hx-boost="true" hx-target="this" hx-swap="outerHTML" method="POST" action="/form/one">
-        <input type="text" name="name" placeholder="type your name" />
-        <button name="next" value="next">next</button>
-        <button name="cancel" value="cancel">cancel</button>
+        <fieldset>
+            <legend>/form/one</legend>
+            <input type="text" name="name" placeholder="type your name" />
+            <button name="next" value="next">next</button>
+            <button name="cancel" value="cancel">cancel</button>
+        </fieldset>
     </form>
 {{end}}
 
 {{block "form-two" .}}
     <form hx-boost="true" hx-target="this" hx-swap="outerHTML" method="POST" action="/form/two">
-        <input type="text" name="email" placeholder="email address" />
-        <button name="next" value="next">next</button>
-        <button name="prev" value="prev">prev</button>
+        <fieldset>
+            <legend>/form/two</legend>
+            <input type="text" name="email" placeholder="email address" />
+            <button name="next" value="next">next</button>
+            <button name="prev" value="prev">prev</button>
+        </fieldset>
     </form>
 {{end}}
 
 {{block "form-three" .}}
     <form hx-boost="true" hx-target="this" hx-swap="outerHTML" method="POST" action="/form/three">
-        <input type="text" name="phone" placeholder="phone number" />
-        <button name="submit" value="submit">submit</button>
-        <button name="prev" value="prev">prev</button>
+        <fieldset>
+            <legend>/form/three</legend>
+            <input type="text" name="phone" placeholder="phone number" />
+            <button name="submit" value="submit">submit</button>
+            <button name="prev" value="prev">prev</button>
+        </fieldset>
     </form>
 {{end}}
 
