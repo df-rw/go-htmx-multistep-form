@@ -42,6 +42,7 @@ func (app *Application) formSection(w http.ResponseWriter, r *http.Request) {
 		switch {
 		case next:
 			if hxRequest && hxBoosted {
+				w.Header().Set("HX-Push-Url", "/form/two")
 				app.render(w, "form-two", nil, http.StatusOK)
 			} else {
 				http.Redirect(w, r, "/form/two", http.StatusSeeOther)
@@ -65,6 +66,7 @@ func (app *Application) formSection(w http.ResponseWriter, r *http.Request) {
 		switch {
 		case next:
 			if hxRequest && hxBoosted {
+				w.Header().Set("HX-Push-Url", "/form/three")
 				app.render(w, "form-three", nil, http.StatusOK)
 			} else {
 				http.Redirect(w, r, "/form/three", http.StatusSeeOther)
@@ -72,6 +74,7 @@ func (app *Application) formSection(w http.ResponseWriter, r *http.Request) {
 
 		case prev:
 			if hxRequest && hxBoosted {
+				w.Header().Set("HX-Push-Url", "/form/one")
 				app.render(w, "form-one", nil, http.StatusOK)
 			} else {
 				http.Redirect(w, r, "/form/one", http.StatusSeeOther)
@@ -96,6 +99,7 @@ func (app *Application) formSection(w http.ResponseWriter, r *http.Request) {
 
 		case prev:
 			if hxRequest && hxBoosted {
+				w.Header().Set("HX-Push-Url", "/form/two")
 				app.render(w, "form-two", nil, http.StatusOK)
 			} else {
 				http.Redirect(w, r, "/form/two", http.StatusSeeOther)
