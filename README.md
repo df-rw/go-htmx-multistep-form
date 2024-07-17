@@ -388,8 +388,8 @@ request first:
 ```diff
     _ = r.ParseForm()
 
-+   hxRequest := r.Header.Get("Hx-Request") == "true"
-+   hxBoosted := r.Header.Get("Hx-Boosted") == "true"
++   hxBoosted := r.Header.Get("Hx-Request") == "true" &&
++       r.Header.Get("Hx-Boosted") == "true"
 ```
 
 And based on it's value, respond appropriately. Note the use of `HX-Push-URL`
@@ -400,7 +400,7 @@ corresponding page for the partial that we return:
     switch {
         case next:
 -           http.Redirect(w, r, "/form/two", http.StatusSeeOther)
-+           if hxRequest && hxBoosted {
++           if hxBoosted {
 +               w.Header().Set("HX-Push-Url", "/form/two")
 +               app.render(w, "form-two", nil, http.StatusOK)
 +           } else {
